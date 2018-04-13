@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-4-theme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Style rules to reproduce the bootstrap-theme.css from bootstrap 3 for bootstrap 4",
   "scripts": {
     "clean": "rimraf dist",
