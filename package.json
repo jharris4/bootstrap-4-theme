@@ -1,0 +1,26 @@
+{
+  "name": "bootstrap-4-theme",
+  "version": "1.0.0",
+  "description": "Style rules to reproduce the bootstrap-theme.css from bootstrap 3 for bootstrap 4",
+  "scripts": {
+    "build-css": "node-sass scss/bootstrap-theme.scss dist/bootstrap-theme.css",
+    "build-min-css": "node-sass scss/bootstrap-theme.scss dist/bootstrap-theme.min.css --output-style compressed",
+    "build": "npm run build-css && npm run build-min-css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jharris4/bootstrap-4-theme"
+  },
+  "keywords": [
+    "bootstrap",
+    "4",
+    "theme",
+    "bootstrap 3 theme"
+  ],
+  "author": "jharris4",
+  "license": "MIT",
+  "devDependencies": {
+    "bootstrap": "^4.1.0",
+    "node-sass": "^4.8.3"
+  }
+}
