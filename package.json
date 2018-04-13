@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "Style rules to reproduce the bootstrap-theme.css from bootstrap 3 for bootstrap 4",
   "scripts": {
+    "clean": "rimraf dist",
     "build-css": "node-sass scss/bootstrap-theme.scss dist/bootstrap-theme.css",
     "build-min-css": "node-sass scss/bootstrap-theme.scss dist/bootstrap-theme.min.css --output-style compressed",
-    "build": "npm run build-css && npm run build-min-css"
+    "build": "npm run build-css && npm run build-min-css",
+    "prepublishOnly": "npm run clean && npm run build"
   },
+  "files": [
+    "scss",
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jharris4/bootstrap-4-theme"
@@ -21,6 +27,7 @@
   "license": "MIT",
   "devDependencies": {
     "bootstrap": "^4.1.0",
-    "node-sass": "^4.8.3"
+    "node-sass": "^4.8.3",
+    "rimraf": "^2.6.2"
   }
 }
