@@ -78,13 +78,15 @@ $button-background-colors: map-merge($theme-colors, (
   secondary: #fff
 ));
 
-$button-text-colors: (
+$theme-text-colors: (
   primary: #fff,
   secondary: #333,
   success: #fff,
   info: #fff,
   warning: #fff,
   danger: #fff,
+  light: #333,
+  dark: #fff
 );
 
 @each $key, $background-color in $button-background-colors {
@@ -92,19 +94,19 @@ $button-text-colors: (
     @include gradient-y($background-color, darken($background-color, 12%));
     background-color: $background-color;
     border-color: darken($background-color, 14%);
-    color: map-get($button-text-colors, $key);
+    color: map-get($theme-text-colors, $key);
     @include box-shadow($btn-box-shadow);
 
     &:hover,
     &:focus {
-      color: map-get($button-text-colors, $key);
+      color: map-get($theme-text-colors, $key);
       background-color: darken($background-color, 12%);
       background-position: 0 -15px;
     }
 
     &:active,
     &.active {
-      color: map-get($button-text-colors, $key);
+      color: map-get($theme-text-colors, $key);
       background-color: darken($background-color, 12%);
       border-color: darken($background-color, 14%);
       background-image: none;
@@ -119,7 +121,7 @@ $button-text-colors: (
       &.focus,
       &:active,
       &.active {
-        color: map-get($button-text-colors, $key);
+        color: map-get($theme-text-colors, $key);
         background-color: darken($background-color, 12%);
         background-image: none;
       }
@@ -138,7 +140,7 @@ $button-text-colors: (
     // Disabled comes first so active can properly restyle
     &.disabled,
     &:disabled {
-      color: map-get($button-text-colors, $key);
+      color: map-get($theme-text-colors, $key);
       background-color: darken($background-color, 10%);
       border-color: darken($background-color, 10%);
     }
@@ -146,7 +148,7 @@ $button-text-colors: (
     &:not([disabled]):not(.disabled):active,
     &:not([disabled]):not(.disabled).active,
     .show > &.dropdown-toggle {
-      color: map-get($button-text-colors, $key);
+      color: map-get($theme-text-colors, $key);
       background-color: darken($background-color, 12%);
       @if $enable-gradients {
         background-image: none; // Remove the gradient for the pressed/active state
@@ -179,102 +181,6 @@ $button-text-colors: (
 .btn-secondary {
   // border-color: #ccc;
   text-shadow: 0 1px 0 #fff;
-}
-
-
-//
-// Dropdowns
-// --------------------------------------------------
-
-.dropdown-menu > li:hover,
-.dropdown-menu > li:focus {
-  @include gradient-y($dropdown-link-hover-bg, darken($dropdown-link-hover-bg, 5%));
-  background-color: darken($dropdown-link-hover-bg, 5%);
-}
-.dropdown-menu > .active,
-.dropdown-menu > .active:hover,
-.dropdown-menu > .active:focus {
-  @include gradient-y($dropdown-link-active-bg, darken($dropdown-link-active-bg, 5%));
-  background-color: darken($dropdown-link-active-bg, 5%);
-}
-
-
-//
-// Navbar
-// --------------------------------------------------
-
-// Light navbar
-
-$navbar-light-bg: #f8f8f8;
-$navbar-light-color: #777;
-$navbar-light-link-active-bg: darken($navbar-light-bg, 6.5%);
-
-.navbar-light {
-  @include gradient-y(lighten($navbar-light-bg, 10%), $navbar-light-bg);
-  border-radius: $border-radius;
-  @include box-shadow(inset 0 1px 0 rgba(255,255,255,.15), 0 1px 5px rgba(0,0,0,.075));
-
-  .navbar-nav .show > a,
-  .navbar-nav .active > a {
-    @include gradient-y(darken($navbar-light-link-active-bg, 5%), darken($navbar-light-link-active-bg, 2%));
-    @include box-shadow(inset 0 3px 9px rgba(0,0,0,.075));
-  }
-
-  .navbar-brand,
-  .navbar-nav li > a {
-    text-shadow: 0 1px 0 rgba(255,255,255,.25);
-  }
-
-  .navbard-brand,
-  .navbar-brand a,
-  .navbar-nav li > a {
-    color: $navbar-light-color;
-  }
-}
-
-
-// Dark navbar
-
-$navbar-dark-bg: #222;
-$navbar-dark-link-active-bg: darken($navbar-dark-bg, 10%);
-
-.navbar-dark {
-  @include gradient-y(lighten($navbar-dark-bg, 10%), $navbar-dark-bg);
-  border-radius: $border-radius;
-  .navbar-nav .show > a,
-  .navbar-nav .active > a {
-    @include gradient-y($navbar-dark-link-active-bg, lighten($navbar-dark-link-active-bg, 2.5%));
-    @include box-shadow(inset 0 3px 9px rgba(0,0,0,.25));
-  }
-
-  .navbar-brand
-  .navbar-nav li > a {
-    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
-  }
-}
-
-// Undo rounded corners in fixed navbars
-.navbar.fixed-top,
-.navbar.fixed-bottom {
-  border-radius: 0;
-}
-
-$dropdown-link-active-bg: $brand-primary;
-
-// Fix active state of dropdown items in collapsed mode
-@media (max-width: 991px) {
-  .navbar .navbar-nav .dropdown-menu {
-    background-color: transparent;
-  }
-
-  .navbar .navbar-nav .show .dropdown-menu > .active > a {
-    &,
-    &:hover,
-    &:focus {
-      color: #fff;
-      @include gradient-y($dropdown-link-active-bg, darken($dropdown-link-active-bg, 5%));
-    }
-  }
 }
 
 
@@ -385,9 +291,22 @@ $list-group-active-border: $list-group-active-bg;
 // Badges
 // --------------------------------------------------
 
+@mixin badge-variant($bg, $color) {
+  color: $color;
+  background-color: $bg;
+
+  &[href] {
+    @include hover-focus {
+      color: $color;
+      text-decoration: none;
+      background-color: darken($bg, 10%);
+    }
+  }
+}
+
 @each $color, $value in $theme-colors {
   .badge-#{$color} {
-    @include badge-variant($value);
+    @include badge-variant($value, map-get($theme-text-colors, $color));
   }
 }
 
